@@ -1,6 +1,7 @@
 import { desc } from "drizzle-orm";
 import { db } from "~/server/db";
 import { prescriptionRequests } from "~/server/db/schema";
+import Link from "next/link";
 
 type Status = (typeof prescriptionRequests.$inferSelect)["status"];
 
@@ -92,7 +93,9 @@ const RequestsPage = async () => {
                   {rows.map((row) => (
                     <tr key={row.id} className="hover:bg-slate-50">
                       <td className="px-6 py-4 font-medium">
-                        {row.patientName}
+                        <Link href={`/requests/${row.id}`}>
+                          {row.patientName}
+                        </Link>
                       </td>
                       <td className="px-6 py-4">{row.medication}</td>
                       <td className="max-w-xs truncate px-6 py-4 text-slate-500">
