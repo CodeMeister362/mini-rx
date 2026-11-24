@@ -41,7 +41,7 @@ const RequestsPage = async () => {
   }));
 
   return (
-    <main className="min-h-screen bg-slate-50 px-4 py-10 text-slate-900 sm:px-8">
+    <div className="px-4 py-10 sm:px-8">
       <div className="mx-auto max-w-5xl">
         {/* Header */}
         <header className="mb-8">
@@ -138,7 +138,7 @@ const RequestsPage = async () => {
           )}
         </section>
       </div>
-    </main>
+    </div>
   );
 };
 

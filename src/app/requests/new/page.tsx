@@ -20,7 +20,7 @@ const NewRequestPage = () => {
   );
 
   return (
-    <main className="min-h-screen bg-slate-50 px-4 py-10 text-slate-900">
+    <div className="px-4 py-10">
       <div className="mx-auto max-w-lg rounded-xl border border-slate-200 bg-white p-6 shadow-sm">
         <h1 className="text-xl font-semibold">New Prescription Request</h1>
 
@@ -63,7 +63,7 @@ const NewRequestPage = () => {
           </button>
         </form>
       </div>
-    </main>
+    </div>
   );
 };
 
