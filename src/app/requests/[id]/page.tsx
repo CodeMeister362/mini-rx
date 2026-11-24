@@ -2,6 +2,7 @@ import { eq } from "drizzle-orm";
 import { notFound } from "next/navigation";
 import { db } from "~/server/db";
 import { prescriptionRequests } from "~/server/db/schema";
+import { ReviewActions } from "./ReviewActions";
 
 const RequestDetailPage = async ({
   params,
@@ -24,6 +25,7 @@ const RequestDetailPage = async ({
         <p className="mt-1 text-slate-700">{request.medication}</p>
         <p className="mt-4 text-sm text-slate-500">{request.symptoms}</p>
         <p className="mt-4 text-sm capitalize">Status: {request.status}</p>
+        {request.status === "pending" && <ReviewActions id={request.id} />}
       </div>
     </main>
   )
