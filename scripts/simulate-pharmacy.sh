@@ -7,7 +7,7 @@ ID="${1:?usage: $0 <requestId> [baseUrl]}"
 BASE_URL="${2:-http://localhost:3000}"
 
 # Use the env var if set, otherwise read it from .env.
-SECRET="${PHARMACY_WEBHOOK_SECRET:-$(grep -E '^PHARMACY_WEBHOOK_SECRET=' .env | cut -d= -f2- | tr -d '"')}"
+SECRET="${PHARMACY_WEBHOOK_SECRET:-$(grep -E '^PHARMACY_WEBHOOK_SECRET=' .env 2>/dev/null | cut -d= -f2- | tr -d '"' || true)}"
 [ -n "$SECRET" ] || { echo "PHARMACY_WEBHOOK_SECRET is not set" >&2; exit 1; }
 
 BODY="{\"event\":\"prescription.shipped\",\"requestId\":$ID}"
