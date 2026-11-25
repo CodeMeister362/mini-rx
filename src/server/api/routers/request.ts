@@ -1,5 +1,6 @@
 import { TRPCError } from "@trpc/server";
 import { and, eq } from "drizzle-orm";
+import { revalidatePath } from "next/cache";
 import { z } from "zod";
 
 import { createTRPCRouter, publicProcedure } from "~/server/api/trpc";
@@ -31,7 +32,11 @@ export const requestRouter = createTRPCRouter({
         )
         .returning();
 
-      if (updated) return updated;
+      if (updated) {
+        // Clear Next's cached list so it shows the new status.
+        revalidatePath("/requests");
+        return updated;
+      }
 
       // Nothing updated: figure out why so the client gets a useful error.
       const existing = await ctx.db.query.prescriptionRequests.findFirst({

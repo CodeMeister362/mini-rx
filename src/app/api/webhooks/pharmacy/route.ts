@@ -1,5 +1,6 @@
 import { createHmac, timingSafeEqual } from "node:crypto";
 import { and, eq } from "drizzle-orm";
+import { revalidatePath } from "next/cache";
 import { NextResponse } from "next/server";
 import { z } from "zod";
 
@@ -77,6 +78,7 @@ export async function POST(req: Request) {
     .returning();
 
   if (updated) {
+    revalidatePath("/requests");
     return NextResponse.json({ ok: true, status: updated.status });
   }
 

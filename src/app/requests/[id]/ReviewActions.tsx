@@ -7,8 +7,8 @@ export const ReviewActions = ({ id }: { id: number }) => {
   const router = useRouter();
 
   const updateStatus = api.request.updateStatus.useMutation({
-    // The page is a server component, so refresh it to re-fetch from the DB.
-    onSuccess: () => router.refresh(),
+    // After approving or denying, go back to the queue.
+    onSuccess: () => router.push("/requests"),
   });
 
   return (
