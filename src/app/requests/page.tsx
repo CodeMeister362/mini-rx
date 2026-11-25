@@ -80,7 +80,7 @@ const RequestsPage = async () => {
             <>
               {/* Desktop table */}
               <table className="hidden w-full text-left text-sm md:table">
-                <thead className="border-b border-slate-200 bg-slate-50 text-xs uppercase tracking-wide text-slate-500">
+                <thead className="border-b border-slate-200 bg-slate-50 text-xs tracking-wide text-slate-500 uppercase">
                   <tr>
                     <th className="px-6 py-3 font-medium">Patient</th>
                     <th className="px-6 py-3 font-medium">Medication</th>
@@ -91,9 +91,16 @@ const RequestsPage = async () => {
                 </thead>
                 <tbody className="divide-y divide-slate-100">
                   {rows.map((row) => (
-                    <tr key={row.id} className="hover:bg-slate-50">
+                    <tr
+                      key={row.id}
+                      className="relative focus-within:bg-sky-50 hover:bg-slate-50"
+                    >
                       <td className="px-6 py-4 font-medium">
-                        <Link href={`/requests/${row.id}`}>
+                        {/* "Stretched link": the ::after overlay covers the whole row */}
+                        <Link
+                          href={`/requests/${row.id}`}
+                          className="after:absolute after:inset-0 focus:outline-none"
+                        >
                           {row.patientName}
                         </Link>
                       </td>
@@ -101,7 +108,7 @@ const RequestsPage = async () => {
                       <td className="max-w-xs truncate px-6 py-4 text-slate-500">
                         {row.symptoms}
                       </td>
-                      <td className="whitespace-nowrap px-6 py-4 text-slate-500">
+                      <td className="px-6 py-4 whitespace-nowrap text-slate-500">
                         {dateFormatter.format(row.createdAt)}
                       </td>
                       <td className="px-6 py-4">
@@ -115,22 +122,27 @@ const RequestsPage = async () => {
               {/* Mobile cards */}
               <ul className="divide-y divide-slate-100 md:hidden">
                 {rows.map((row) => (
-                  <li key={row.id} className="p-4">
-                    <div className="flex items-start justify-between gap-3">
-                      <div>
-                        <p className="font-medium">{row.patientName}</p>
-                        <p className="text-sm text-slate-700">
-                          {row.medication}
-                        </p>
+                  <li key={row.id}>
+                    <Link
+                      href={`/requests/${row.id}`}
+                      className="block p-4 hover:bg-slate-50 focus:bg-sky-50 focus:outline-none"
+                    >
+                      <div className="flex items-start justify-between gap-3">
+                        <div>
+                          <p className="font-medium">{row.patientName}</p>
+                          <p className="text-sm text-slate-700">
+                            {row.medication}
+                          </p>
+                        </div>
+                        <StatusBadge status={row.status} />
                       </div>
-                      <StatusBadge status={row.status} />
-                    </div>
-                    <p className="mt-2 text-sm text-slate-500">
-                      {row.symptoms}
-                    </p>
-                    <p className="mt-2 text-xs text-slate-400">
-                      {dateFormatter.format(row.createdAt)}
-                    </p>
+                      <p className="mt-2 text-sm text-slate-500">
+                        {row.symptoms}
+                      </p>
+                      <p className="mt-2 text-xs text-slate-400">
+                        {dateFormatter.format(row.createdAt)}
+                      </p>
+                    </Link>
                   </li>
                 ))}
               </ul>
